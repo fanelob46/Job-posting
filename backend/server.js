@@ -12,6 +12,17 @@ const app = express();
 //to ensure sending json works req.body to work
 app.use(express.json());
 
+app.get("/api/jobs", async (req,res) =>{
+
+    try {
+        const jobs =await Jobs.find({});
+        res.status(200).json({success:true, data: jobs})
+    } catch (error) {
+        console.log("Error in  fetching jobs", error.message);
+        res.status(500).json({success:false, message:"server error"});
+    }
+})
+
 app.post("/api/jobs", async (req, res) => {
   const job = req.body; //user will send this data
 
@@ -37,6 +48,19 @@ if (
   }
 });
 
+app.put("/api/jobs/:id", async (req, res) => {
+  const { id } = req.params;
+  
+  const job = req.body;
+
+  try {
+  const updatedjob =  await Jobs.findByIdAndUpdate(id, job, {new:true});
+    res.status(200).json({ success: true, data: updatedjob});
+  } catch (error) {
+    res.status(500).json({success:false, message:"server error"})
+  }
+});
+
 app.delete("/api/jobs/:id", async (req,res) =>{
     const {id} = req.params;
 
@@ -47,6 +71,8 @@ app.delete("/api/jobs/:id", async (req,res) =>{
         res.status(404).json({success:false, message:"Job not found"})
     }
 })
+
+
 
 app.listen(5000, () => {
   connectDB();
