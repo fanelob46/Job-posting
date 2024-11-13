@@ -37,6 +37,17 @@ if (
   }
 });
 
+app.delete("/api/jobs/:id", async (req,res) =>{
+    const {id} = req.params;
+
+    try {
+        await Jobs.findByIdAndDelete(id);
+        res.status(200).json({success: true, message:"job deleted"})
+    } catch (error) {
+        res.status(404).json({success:false, message:"Job not found"})
+    }
+})
+
 app.listen(5000, () => {
   connectDB();
   console.log("Server started at http://localhost:5000");
