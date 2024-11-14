@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 
 import jobRoutes from "./routes/jobRoutes.js"
+import userRoutes from './routes/userRoutes.js'
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/jobs", jobRoutes);
+app.use("/api/users", userRoutes)
 
 
 app.listen(5000, () => {
