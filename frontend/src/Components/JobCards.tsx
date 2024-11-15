@@ -40,15 +40,15 @@ const JobCards: React.FC<JobCardProps> = ({ job }) => {
   };
 
   return (
-    <section className="bg-[#f0ecec]">
+    <section className="px-10">
       <div className="py-5 px-10">
-        <div className="rounded bg-white px-10 w-fit">
+        <div className="rounded bg-white px-10 w-fit h-[300px] space-y-3">
           <h1 className="text-xl font-bold">{job.title}</h1>
           <p className="flex items-center text-gray-600">
             <IoLocation className="mr-1" />
             {job.location}
           </p>
-          <p className="text-gray-800">{job.description}</p>
+          <p className="text-gray-800 w-[300px]">{job.description}</p>
           <div className="mt-3">
             <h1 className="text-lg font-semibold">
               R{job.salary.toLocaleString()}

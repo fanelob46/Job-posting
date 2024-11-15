@@ -54,7 +54,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div>
+    <div className="grid place-items-center py-10">
       <h1>Create a new Job</h1>
 
       <div className="rounded-lg shadow-md p-6 grid place-items-center dark:text-white dark:bg-[#1c2434] w-[700px] space-y-5">
@@ -106,12 +106,14 @@ const CreatePage = () => {
             className="dark:bg-gray-400 p-2 rounded w-full"
           />
 
-          <button
-            type="submit"
-            className="bg-slate-400 rounded-lg px-3 py-2 text-white"
-          >
-            Add Job
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-slate-400 rounded-lg px-3 py-2 text-white "
+            >
+              Add Job
+            </button>
+          </div>
         </form>
       </div>
     </div>

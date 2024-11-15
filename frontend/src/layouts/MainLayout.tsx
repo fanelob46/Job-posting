@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom"
 
 const MainLayout = () => {
   return (
-    <div>
-        <NavBar/>
-        <Outlet/>
+    <div className="bg-[#f0ecec] h-[100vh] text-">
+      <NavBar />
+      <Outlet />
     </div>
-  )
+  );
 }
 
 export default MainLayout

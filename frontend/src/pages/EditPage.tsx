@@ -68,9 +68,9 @@ const EditJobPage: React.FC = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container grid place-items-center">
       <h2 className="text-xl font-bold mb-4">Edit Job</h2>
-      <form>
+      <form className="w-[600px]">
         <div className="mb-4">
           <label className="block text-gray-700">Title</label>
           <input

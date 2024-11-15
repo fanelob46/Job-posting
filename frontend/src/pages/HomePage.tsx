@@ -19,9 +19,11 @@ const HomePage = () => {
 
   return (
     <div>
-      <Link to={"/create"}>
-        <button>Create a new job</button>
-      </Link>
+      <div className="flex justify-center py-5">
+        <Link to={"/create"}>
+          <button className="bg-slate-500 rounded-xl px-5">Create a new job</button>
+        </Link>
+      </div>
 
       <div className="grid grid-cols-4">
         {jobs.length > 0 ? (
