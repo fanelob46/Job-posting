@@ -1,44 +1,41 @@
-import { set } from "mongoose";
 import { create } from "zustand";
 
-interface Product {
+interface Job {
   _id: string;
   title: string;
   description: string;
-  location: String;
+  location: string;
   salary: number;
-  type: String;
+  type: string;
 }
 
-interface ProductStore {
-  products: Product[];
-  setProducts: (products: Product[]) => void;
-  createProduct: (
-    newProduct: Omit<Product, "_id">
+interface JobStore {
+  jobs: Job[];
+  setJobs: (jobs: Job[]) => void;
+  createJob: (
+    newJob: Omit<Job, "_id">
   ) => Promise<{ success: boolean; message: string }>;
-  fetchProducts: () => Promise<void>;
-  deleteProduct: (
-    pid: string
-  ) => Promise<{ success: boolean; message: string }>;
-  updateProduct: (
+  fetchJobs: () => Promise<void>;
+  deleteJob: (pid: string) => Promise<{ success: boolean; message: string }>;
+  updateJob: (
     pid: string,
-    updatedProduct: Partial<Omit<Product, "_id">>
+    updatedJob: Partial<Omit<Job, "_id">>
   ) => Promise<{ success: boolean; message: string }>;
 }
 
-export const useProductStore = create<ProductStore>((set) => ({
-  products: [],
-  setProducts: (products) => set({ products }),
+export const useJobStore = create<JobStore>((set) => ({
+  jobs: [],
+  setJobs: (jobs) => set({ jobs }),
 
-  createProduct: async (newProduct) => {
+  createJob: async (newJob) => {
     if (
-      !newProduct.title ||
-      !newProduct.description ||
-      !newProduct.location ||
-      !newProduct.salary ||
-      !newProduct.type
+      !newJob.title ||
+      !newJob.description ||
+      !newJob.location ||
+      !newJob.salary ||
+      !newJob.type
     ) {
-      return { success: false, message: "please enter all fields..." };
+      return { success: false, message: "Please enter all fields..." };
     }
 
     const res = await fetch("/api/jobs", {
@@ -46,49 +43,49 @@ export const useProductStore = create<ProductStore>((set) => ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newProduct),
+      body: JSON.stringify(newJob),
     });
+
     const data = await res.json();
-    set((state) => ({ products: [...state.products, data.data] }));
-    return { success: true, message: "Product created successfully" };
+    if (!data?.data)
+      return { success: false, message: "Failed to create job." };
+
+    set((state) => ({ jobs: [...state.jobs, data.data] }));
+    return { success: true, message: "Job created successfully" };
   },
 
-  fetchProducts: async () => {
+  fetchJobs: async () => {
     const res = await fetch("/api/jobs");
     const data = await res.json();
-    set({ products: data.data });
+    set({jobs: data.data})
   },
 
-  deleteProduct: async (pid) => {
+  deleteJob: async (pid) => {
     const res = await fetch(`/api/jobs/${pid}`, {
       method: "DELETE",
     });
     const data = await res.json();
     if (!data.success) return { success: false, message: data.message };
 
-    // Update the UI immediately without needing a refresh
     set((state) => ({
-      products: state.products.filter((product) => product._id !== pid),
+      jobs: state.jobs.filter((job) => job._id !== pid),
     }));
     return { success: true, message: data.message };
   },
 
-  updateProduct: async (pid, updatedProduct) => {
+  updateJob: async (pid, updatedJob) => {
     const res = await fetch(`/api/jobs/${pid}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedProduct),
+      body: JSON.stringify(updatedJob),
     });
     const data = await res.json();
     if (!data.success) return { success: false, message: data.message };
 
-    // Update the UI immediately without needing a refresh
     set((state) => ({
-      products: state.products.map((product) =>
-        product._id === pid ? data.data : product
-      ),
+      jobs: state.jobs.map((job) => (job._id === pid ? data.data : job)),
     }));
 
     return { success: true, message: data.message };
