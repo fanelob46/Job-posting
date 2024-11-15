@@ -14,7 +14,7 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />
-        <Route path="/edit-job/:id" element={<EditPage />} />
+        <Route path="/edit-job/:jobId" element={<EditPage />} />
       </Route>
     )
   );
