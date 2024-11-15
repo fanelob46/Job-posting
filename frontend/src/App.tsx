@@ -4,6 +4,7 @@ import NavBar from "./Components/NavBar"
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
+import EditPage from "./pages/EditPage";
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage/>}/>
-        <Route path="/create" element={<CreatePage/>}/>
+        <Route index element={<HomePage />} />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/edit-job/:id" element={<EditPage />} />
       </Route>
     )
   );
